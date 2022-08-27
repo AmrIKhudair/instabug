@@ -26,6 +26,6 @@ model Event {
 
 model EventAction {
   id      String  @id
-  name    String
+  name    String  @unique
   events  Event[]
 }
