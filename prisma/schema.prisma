@@ -9,3 +9,23 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+
+model Event {
+  id          String      @id
+  actor_id    String
+  actor_name  String
+  group       String
+  action      EventAction @relation(fields: [action_id], references: [id])
+  action_id   String
+  target_id   String
+  target_name String
+  location    String
+  occured_at  DateTime
+  metadata    String
+}
+
+model EventAction {
+  id      String  @id
+  name    String
+  events  Event[]
+}
