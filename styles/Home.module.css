@@ -26,6 +26,7 @@
   background: #F5F5F5;
   border-radius: 15px 15px 0 0;
   padding: 17px;
+  z-index: 1;
 }
 
 .input_group {
@@ -90,7 +91,7 @@
   overflow-y: auto;
   -ms-overflow-style: none;
   scrollbar-width: none;
-  
+  flex: 1;
 }
 
 .header, .event_list, .load_more {
@@ -113,4 +114,5 @@
   letter-spacing: 0.02em;
   text-transform: uppercase;
   color: #616161;
+  z-index: 1;
 }
