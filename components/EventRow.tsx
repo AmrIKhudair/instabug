@@ -2,6 +2,7 @@ import { createRef, useLayoutEffect } from 'react'
 import styles from '../styles/Home.module.css'
 import Event from '../types/Event'
 import dayjs from 'dayjs'
+import casual from 'casual'
 
 interface Props {
     event: Event,
@@ -12,6 +13,7 @@ interface Props {
 export default function EventRow ({ event, expanded = false, onClick }: Props) {
     const wrapper = createRef<HTMLDivElement>()
     const card = createRef<HTMLDivElement>()
+    const initial = event.actor_name[0].toUpperCase();
 
     useLayoutEffect(() => { 
         if (!wrapper.current) return
@@ -23,7 +25,10 @@ export default function EventRow ({ event, expanded = false, onClick }: Props) {
         <div className={expanded ? styles.expanded : styles.row} onClick={onClick} ref={wrapper}>
             { !expanded && (
                 <>
-                    <div className={styles.td}>{event.actor_name}</div>
+                    <div className={styles.td}>
+                        <div className={styles.avatar}>{initial}</div>
+                        {event.actor_name}
+                    </div>
                     <div className={styles.td}>{event.action.name}</div>
                     <div className={styles.td}>{dayjs(event.occured_at).format('MMM DD, hh:mm A')}</div>
                 </>
@@ -32,7 +37,7 @@ export default function EventRow ({ event, expanded = false, onClick }: Props) {
                 expanded && (
                     <div className={styles.card} ref={card}>
                         <div className={styles.row}>
-                            <div className={styles.td}>
+                            <div className={styles.property_group}>
                                 <div className={styles.card_title}>ACTOR</div>
                                 <div className={styles.property_row}>
                                     <div className={styles.property_name}>Name</div>
@@ -43,7 +48,7 @@ export default function EventRow ({ event, expanded = false, onClick }: Props) {
                                     <div className={styles.property_value}>{event.actor_id}</div>
                                 </div>
                             </div>
-                            <div className={styles.td}>
+                            <div className={styles.property_group}>
                                 <div className={styles.card_title}>ACTION</div>
                                 <div className={styles.property_row}>
                                     <div className={styles.property_name}>Name</div>
@@ -54,7 +59,7 @@ export default function EventRow ({ event, expanded = false, onClick }: Props) {
                                     <div className={styles.property_value}>{event.action.id}</div>
                                 </div>
                             </div>
-                            <div className={styles.td}>
+                            <div className={styles.property_group}>
                                 <div className={styles.card_title}>DATE</div>
                                 <div className={styles.property_row}>
                                     <div className={styles.property_name}>Readable</div>
@@ -63,7 +68,7 @@ export default function EventRow ({ event, expanded = false, onClick }: Props) {
                             </div>
                         </div>
                         <div className={styles.row}>
-                            <div className={styles.td}>
+                            <div className={styles.property_group}>
                                 <div className={styles.card_title}>METADATA</div>
                                 {Object.entries(event.metadata).map(([key, value]) => (
                                     <div className={styles.property_row} key={key}>
@@ -72,7 +77,7 @@ export default function EventRow ({ event, expanded = false, onClick }: Props) {
                                     </div>
                                 ))}
                             </div>
-                            <div className={styles.td}>
+                            <div className={styles.property_group}>
                                 <div className={styles.card_title}>TARGET</div>
                                 <div className={styles.property_row}>
                                     <div className={styles.property_name}>Name</div>
