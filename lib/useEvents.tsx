@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { createContext, Dispatch, SetStateAction, useState } from "react";
 import useSWR from "swr";
 import EventRow from '../components/EventRow'
 import Event from '../types/Event'
@@ -10,6 +10,8 @@ type Options = {
 type PageProps = {
     index: number,
     options: Options,
+    expanded: string,
+    setExpanded: Dispatch<SetStateAction<string>>,
     onLoading?: (loading: boolean) => any,
     onError?: (error: boolean) => any,
     onHasMore?: (hasMore: boolean) => void,
@@ -27,18 +29,19 @@ export default function useEvents(options: Options) {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(false)
     const [hasMore, setHasMore] = useState(false)
+    const [expanded, setExpanded] = useState('')
 
     for (let i = 1; i < index; i++) {
-        pages.push(<Page index={i} options={options} />)
+        pages.push(<Page index={i} options={options} expanded={expanded} setExpanded={setExpanded} />)
     }
 
-    pages.push(<Page index={index} options={options} onLoading={setLoading} onError={setError} onHasMore={setHasMore} />)
+    pages.push(<Page index={index} options={options} expanded={expanded} setExpanded={setExpanded} onLoading={setLoading} onError={setError} onHasMore={setHasMore} key={index} />)
 
     return {pages, loading, error, hasMore, loadMore}
     
 }
 
-function Page ({ index, options, onLoading, onError, onHasMore } : PageProps ) {
+function Page ({ index, options, expanded, setExpanded, onLoading, onError, onHasMore } : PageProps ) {
     const fetcher = (input: RequestInfo | URL, init?: RequestInit | undefined) => fetch(input, init).then(res => res.json())
     let url = `/api/events?page=${index}`
     if (options.q) url += `&q=${options.q}`
@@ -48,5 +51,5 @@ function Page ({ index, options, onLoading, onError, onHasMore } : PageProps ) {
     if (onLoading) onLoading(!data)
     if (error || !data) return <></>;
     if (onHasMore) onHasMore(data.hasMore)
-    return <>{data.events.map(event => <EventRow event={event} key={event.id} />)}</>
+    return <>{data.events.map(event => <EventRow event={event} expanded={expanded === event.id} onClick={() => setExpanded(event.id)} key={event.id} />)}</>
 }

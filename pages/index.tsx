@@ -30,7 +30,9 @@ const Home: NextPage = () => {
         </header>
 
         <main className={styles.main}>
-          { pages }
+          <div className={styles.event_list}>
+            { pages }
+          </div>
         </main>
 
         <button className={styles.load_more} onClick={loadMore} disabled={error || loading || !hasMore}>
