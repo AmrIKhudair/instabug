@@ -23,16 +23,16 @@ export default async function handler (req: NextApiRequest, res: NextApiResponse
   switch (req.method) {
     case 'GET':
         const query: Prisma.EventFindManyArgs = { take: ITEMS_PER_PAGE, include: { action: true }, orderBy: { occured_at: 'desc' } }
-        const cursor = req.query.before as string
+        const page = +(req.query.page as string) || 1
         const q = req.query.q as string
         const actor_id = req.query.actor_id as string
         const target_id = req.query.target_id as string
         const action_id = req.query.action_id as string
         const action_name = req.query.action_name as string
 
-        if (cursor) {
-            query.cursor = { id: cursor }
-            query.skip = 1
+        if (page) {
+            query.skip = (page - 1) * ITEMS_PER_PAGE 
+            query.take = ITEMS_PER_PAGE
         }
 
         if (q) {
@@ -97,7 +97,7 @@ export default async function handler (req: NextApiRequest, res: NextApiResponse
 
         if (events.length) {
             const last = events[events.length - 1].id 
-            hasMore = events.length === ITEMS_PER_PAGE && await prisma.event.count({ cursor: {id: last}, skip: 1, orderBy: query.orderBy, where: query.where }) > 0
+            hasMore = events.length === ITEMS_PER_PAGE && await prisma.event.count({ orderBy: query.orderBy, where: query.where }) > page * ITEMS_PER_PAGE
         }
 
         const eventsJson = events.map(event => ({
