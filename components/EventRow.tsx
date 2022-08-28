@@ -1,6 +1,7 @@
-import { createRef, useLayoutEffect } from 'react';
+import { createRef, useLayoutEffect } from 'react'
 import styles from '../styles/Home.module.css'
 import Event from '../types/Event'
+import dayjs from 'dayjs'
 
 interface Props {
     event: Event,
@@ -9,13 +10,13 @@ interface Props {
 }
 
 export default function EventRow ({ event, expanded = false, onClick }: Props) {
-    const wrapper = createRef<HTMLDivElement>();
-    const card = createRef<HTMLDivElement>();
+    const wrapper = createRef<HTMLDivElement>()
+    const card = createRef<HTMLDivElement>()
 
     useLayoutEffect(() => { 
         if (!wrapper.current) return
         if (!card.current) { wrapper.current.style.height = ''; return }
-        wrapper.current.style.height = getComputedStyle(card.current).height;
+        wrapper.current.style.height = getComputedStyle(card.current).height
     })
 
     return (
@@ -24,7 +25,7 @@ export default function EventRow ({ event, expanded = false, onClick }: Props) {
                 <>
                     <div className={styles.td}>{event.actor_name}</div>
                     <div className={styles.td}>{event.action.name}</div>
-                    <div className={styles.td}>{event.occured_at}</div>
+                    <div className={styles.td}>{dayjs(event.occured_at).format('MMM DD, hh:mm A')}</div>
                 </>
             )}
             {
@@ -57,7 +58,7 @@ export default function EventRow ({ event, expanded = false, onClick }: Props) {
                                 <div className={styles.card_title}>DATE</div>
                                 <div className={styles.property_row}>
                                     <div className={styles.property_name}>Readable</div>
-                                    <div className={styles.property_value}>{event.occured_at}</div>
+                                    <div className={styles.property_value}>{dayjs(event.occured_at).format('MMM DD, hh:mm A')}</div>
                                 </div>
                             </div>
                         </div>
