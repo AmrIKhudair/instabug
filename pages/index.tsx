@@ -2,26 +2,13 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import Event from '../components/Event'
+import Event from '../components/EventRow'
+import useEvents from '../lib/useEvents'
+import { useState } from 'react'
 
 const Home: NextPage = () => {
-  const events = [
-    {
-      actor: 'a@b.c',
-      action: 'user.login_succeeded',
-      date: 'Aug 7, 4:48 PM'
-    },
-    {
-      actor: 'a@b.c',
-      action: 'user.login_succeeded',
-      date: 'Aug 7, 4:48 PM'
-    },
-    {
-      actor: 'a@b.c',
-      action: 'user.login_succeeded',
-      date: 'Aug 7, 4:48 PM'
-    }
-  ]
+  const [ q, setQ ] = useState('')
+  const { pages, loading, error, hasMore, loadMore } = useEvents({ q })
 
   return (
     <div className={styles.container}>
@@ -33,7 +20,7 @@ const Home: NextPage = () => {
       <article className={styles.article}>
         <header className={styles.header}>
           <div className={styles.input_group}>
-            <input className={styles.search_input} />
+            <input className={styles.search_input} onChange={e => setQ(e.target.value)} />
           </div>
           <div className={styles.thead}>
             <div className={styles.th}>ACTOR</div>
@@ -43,11 +30,11 @@ const Home: NextPage = () => {
         </header>
 
         <main className={styles.main}>
-          { events.map((event, i) => <Event event={event} key={i} />)}
+          { pages }
         </main>
 
-        <button className={styles.load_more}>
-          LOAD MORE
+        <button className={styles.load_more} onClick={loadMore} disabled={error || loading || !hasMore}>
+          { error ? 'ERROR' : loading ? 'LOADING' : hasMore ? 'LOAD MORE' : 'THE END' }
         </button>
       </article>
         
