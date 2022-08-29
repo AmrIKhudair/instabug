@@ -33,11 +33,11 @@ async function seed () {
                 target_name: casual.name,
                 location: casual.ip,
                 occured_at: casual.date("YYYY-MM-DDTHH:MM:SSZ"),
-                metadata: JSON.stringify({
+                metadata: {
                     redirect: casual.url,
                     description: casual.short_description,
                     x_request_id: generateId('req')
-                })
+                }
             }
         })
     }

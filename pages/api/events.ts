@@ -115,7 +115,7 @@ export default async function handler (req: NextApiRequest, res: NextApiResponse
             target_name: event.target_name,
             location: event.location,
             occured_at: event.occured_at,
-            metadata: JSON.parse(event.metadata)
+            metadata: event.metadata
         }))
 
         res.json({
@@ -149,7 +149,7 @@ export default async function handler (req: NextApiRequest, res: NextApiResponse
                 target_name: data.target_name,
                 location: data.location,
                 occured_at: data.occured_at,
-                metadata: JSON.stringify(data.metadata)
+                metadata: data.metadata
             }
         })
 
