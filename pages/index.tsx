@@ -20,7 +20,7 @@ const Home: NextPage = () => {
       <article className={styles.article}>
         <header className={styles.header}>
           <div className={styles.input_group}>
-            <input className={styles.search_input} onChange={e => setQ(e.target.value)} />
+            <input className={styles.search_input} onChange={e => setQ(e.target.value)} placeholder="Search name, email or action..." />
           </div>
           <div className={styles.thead}>
             <div className={styles.th}>ACTOR</div>
