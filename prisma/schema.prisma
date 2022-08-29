@@ -6,8 +6,8 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Event {
@@ -21,7 +21,7 @@ model Event {
   target_name String
   location    String
   occured_at  DateTime
-  metadata    String
+  metadata    Json
 }
 
 model EventAction {
