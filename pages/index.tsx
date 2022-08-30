@@ -17,7 +17,7 @@ const Home: NextPage = () => {
       </Head>
 
       <article className="w-[969px] h-[743px] bg-white rounded-[15px] m-auto font-['Inter'] text-[14px] flex flex-col before:absolute before:w-[933px] before:h-[743px] before:ml-[17px] before:border before:border-[#F0F0F0] before:shadow-[0px_3px_5px_rgba(0,0,0,0.2)] before:rounded-[14px]">
-        <header className='h-[108px] bg-[#F5F5F5] rounded-t-[15px] mx-[18px] py-[18px] px-[23px] z-10'>
+        <header className='h-[108px] bg-[#F5F5F5] rounded-t-[15px] mx-[18px] py-[18px] px-[23px] z-20'>
           <div className='flex h-[45px] border border-[#E0E0DF] rounded-[8px]'>
             <input className="flex-1 bg-transparent border-0 outline-0 m-[13px] font-['Inter'] text-[#959595]" onChange={e => setQ(e.target.value)} placeholder="Search name, email or action..." />
             <FilterButton onFilter={setFilter}/>

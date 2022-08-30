@@ -37,7 +37,7 @@ export default function EventRow ({ event, expanded = false, onClick }: Props) {
             )}
             {
                 expanded && (
-                    <div className='absolute w-[964px] ml-[-39px] bg-white border border-[#DFDFDF] shadow-[0px_2px_5px_rgba(0,0,0,0.04)] rounded-[12px] z-50 py-[30px] px-[39px]' ref={card}>
+                    <div className='absolute w-[964px] ml-[-39px] bg-white border border-[#DFDFDF] shadow-[0px_2px_5px_rgba(0,0,0,0.04)] rounded-[12px] z-10 py-[30px] px-[39px]' ref={card}>
                         <div className='flex py-[20px]'>
                             <div className='flex-1'>
                                 <div className='font-medium uppercase text-[#929292] pb-[16px]'>ACTOR</div>
