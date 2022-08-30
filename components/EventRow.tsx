@@ -1,14 +1,14 @@
 import { createRef, useLayoutEffect } from 'react'
-import styles from '../styles/Home.module.css'
 import Event from '../types/Event'
 import dayjs from 'dayjs'
-import casual from 'casual'
+import cn from 'classnames'
 
 interface Props {
     event: Event,
     expanded?: boolean,
     onClick: () => void
 }
+
 
 export default function EventRow ({ event, expanded = false, onClick }: Props) {
     const wrapper = createRef<HTMLDivElement>()
@@ -22,73 +22,75 @@ export default function EventRow ({ event, expanded = false, onClick }: Props) {
     })
 
     return (
-        <div className={expanded ? styles.expanded : styles.row} onClick={onClick} ref={wrapper}>
+        <div className={cn('flex', {'py-[20px]': !expanded})} onClick={onClick} ref={wrapper}>
             { !expanded && (
                 <>
-                    <div className={styles.td}>
-                        <div className={styles.avatar}>{initial}</div>
+                    <div className='flex-1 flex leading-[25px]'>
+                        <div className='w-[25px] h-[25px] bg-gradient-to-br from-[#F3994A_14.17%] to-[#B325E2_84.99%] rounded-full inline-block mr-[15px] text-center text-white font-bold text-[12px] uppercase'>
+                            {initial}
+                        </div>
                         {event.actor_name}
                     </div>
-                    <div className={styles.td}>{event.action.name}</div>
-                    <div className={styles.td}>{dayjs(event.occured_at).format('MMM DD, hh:mm A')}</div>
+                    <div className='flex-1 flex leading-[25px]'>{event.action.name}</div>
+                    <div className='flex-1 flex leading-[25px]'>{dayjs(event.occured_at).format('MMM DD, hh:mm A')}</div>
                 </>
             )}
             {
                 expanded && (
-                    <div className={styles.card} ref={card}>
-                        <div className={styles.row}>
-                            <div className={styles.property_group}>
-                                <div className={styles.card_title}>ACTOR</div>
-                                <div className={styles.property_row}>
-                                    <div className={styles.property_name}>Name</div>
-                                    <div className={styles.property_value}>{event.actor_name}</div>
+                    <div className='absolute w-[964px] ml-[-39px] bg-white border border-[#DFDFDF] shadow-[0px_2px_5px_rgba(0,0,0,0.04)] rounded-[12px] z-50 py-[30px] px-[39px]' ref={card}>
+                        <div className='flex py-[20px]'>
+                            <div className='flex-1'>
+                                <div className='font-medium uppercase text-[#929292] pb-[16px]'>ACTOR</div>
+                                <div className='table-row'>
+                                    <div className='table-cell w-[90px] text-[#929292] pb-[12px]'>Name</div>
+                                    <div className='table-cell pb-[12px]'>{event.actor_name}</div>
                                 </div>
-                                <div className={styles.property_row}>
-                                    <div className={styles.property_name}>ID</div>
-                                    <div className={styles.property_value}>{event.actor_id}</div>
-                                </div>
-                            </div>
-                            <div className={styles.property_group}>
-                                <div className={styles.card_title}>ACTION</div>
-                                <div className={styles.property_row}>
-                                    <div className={styles.property_name}>Name</div>
-                                    <div className={styles.property_value}>{event.action.name}</div>
-                                </div>
-                                <div className={styles.property_row}>
-                                    <div className={styles.property_name}>ID</div>
-                                    <div className={styles.property_value}>{event.action.id}</div>
+                                <div className='table-row'>
+                                    <div className='table-cell w-[90px] text-[#929292] pb-[12px]'>ID</div>
+                                    <div className='table-cell pb-[12px]'>{event.actor_id}</div>
                                 </div>
                             </div>
-                            <div className={styles.property_group}>
-                                <div className={styles.card_title}>DATE</div>
-                                <div className={styles.property_row}>
-                                    <div className={styles.property_name}>Readable</div>
-                                    <div className={styles.property_value}>{dayjs(event.occured_at).format('MMM DD, hh:mm A')}</div>
+                            <div className='flex-1'>
+                                <div className='font-medium uppercase text-[#929292] pb-[16px]'>ACTION</div>
+                                <div className='table-row'>
+                                    <div className='table-cell w-[90px] text-[#929292] pb-[12px]'>Name</div>
+                                    <div className='table-cell pb-[12px]'>{event.action.name}</div>
+                                </div>
+                                <div className='table-row'>
+                                    <div className='table-cell w-[90px] text-[#929292] pb-[12px]'>ID</div>
+                                    <div className='table-cell pb-[12px]'>{event.action.id}</div>
+                                </div>
+                            </div>
+                            <div className='flex-1'>
+                                <div className='font-medium uppercase text-[#929292] pb-[16px]'>DATE</div>
+                                <div className='table-row'>
+                                    <div className='table-cell w-[90px] text-[#929292] pb-[12px]'>Readable</div>
+                                    <div className='table-cell pb-[12px]'>{dayjs(event.occured_at).format('MMM DD, hh:mm A')}</div>
                                 </div>
                             </div>
                         </div>
-                        <div className={styles.row}>
-                            <div className={styles.property_group}>
-                                <div className={styles.card_title}>METADATA</div>
+                        <div className='flex py-[20px]'>
+                            <div className='flex-1'>
+                                <div className='font-medium uppercase text-[#929292] pb-[16px]'>METADATA</div>
                                 {Object.entries(event.metadata).map(([key, value]) => (
-                                    <div className={styles.property_row} key={key}>
-                                        <div className={styles.property_name}>{key}</div>
-                                        <div className={styles.property_value}>{value}</div>
+                                    <div className='table-row' key={key}>
+                                        <div className='table-cell w-[90px] text-[#929292] pb-[12px]'>{key}</div>
+                                        <div className='table-cell pb-[12px]'>{value}</div>
                                     </div>
                                 ))}
                             </div>
-                            <div className={styles.property_group}>
-                                <div className={styles.card_title}>TARGET</div>
-                                <div className={styles.property_row}>
-                                    <div className={styles.property_name}>Name</div>
-                                    <div className={styles.property_value}>{event.target_name}</div>
+                            <div className='flex-1'>
+                                <div className='font-medium uppercase text-[#929292] pb-[16px]'>TARGET</div>
+                                <div className='table-row'>
+                                    <div className='table-cell w-[90px] text-[#929292] pb-[12px]'>Name</div>
+                                    <div className='table-cell pb-[12px]'>{event.target_name}</div>
                                 </div>
-                                <div className={styles.property_row}>
-                                    <div className={styles.property_name}>ID</div>
-                                    <div className={styles.property_value}>{event.target_id}</div>
+                                <div className='table-row'>
+                                    <div className='table-cell w-[90px] text-[#929292] pb-[12px]'>ID</div>
+                                    <div className='table-cell pb-[12px]'>{event.target_id}</div>
                                 </div>
                             </div>
-                            <div className={styles.td}></div>
+                            <div className='flex-1'></div>
                         </div>
                     </div>
                 )
