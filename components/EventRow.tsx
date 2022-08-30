@@ -22,7 +22,7 @@ export default function EventRow ({ event, expanded = false, onClick }: Props) {
     })
 
     return (
-        <div className={cn('flex', {'py-[20px]': !expanded})} onClick={onClick} ref={wrapper}>
+        <div className={cn('flex cursor-pointer', {'py-[20px]': !expanded})} onClick={onClick} ref={wrapper}>
             { !expanded && (
                 <>
                     <div className='flex-1 flex leading-[25px]'>
