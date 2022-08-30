@@ -51,5 +51,5 @@ function Page ({ index, options, expanded, setExpanded, onLoading, onError, onHa
     if (onLoading) onLoading(!data)
     if (error || !data) return <></>;
     if (onHasMore) onHasMore(data.hasMore)
-    return <>{data.events.map(event => <EventRow event={event} expanded={expanded === event.id} onClick={() => setExpanded(event.id)} key={event.id} />)}</>
+    return <>{data.events.map(event => <EventRow event={event} expanded={expanded === event.id} onClick={() => setExpanded(expanded === event.id ? '' : event.id)} key={event.id} />)}</>
 }
