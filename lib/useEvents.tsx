@@ -32,7 +32,7 @@ export default function useEvents(options: Options) {
     const [expanded, setExpanded] = useState('')
 
     for (let i = 1; i < index; i++) {
-        pages.push(<Page index={i} options={options} expanded={expanded} setExpanded={setExpanded} />)
+        pages.push(<Page index={i} options={options} expanded={expanded} setExpanded={setExpanded} key={i} />)
     }
 
     pages.push(<Page index={index} options={options} expanded={expanded} setExpanded={setExpanded} onLoading={setLoading} onError={setError} onHasMore={setHasMore} key={index} />)
