@@ -32,7 +32,7 @@ const Home: NextPage = () => {
           </div>
         </main>
 
-        <button className="mx-[18px] h-[52px] bg-[#F5F5F5] rounded-b-[15px] border-0 outline-0 font-['Inter'] font-semibold text-[14px] text-[#616161] tracking-[0.02em] uppercase z-10" onClick={loadMore} disabled={error || loading || !hasMore}>
+        <button className="mx-[18px] h-[52px] bg-[#F5F5F5] rounded-b-[15px] border-0 outline-0 font-['Inter'] font-semibold text-[14px] text-[#616161] tracking-[0.02em] uppercase z-10 disabled:cursor-not-allowed" onClick={loadMore} disabled={error || loading || !hasMore}>
           { error ? 'ERROR' : loading ? 'LOADING' : hasMore ? 'LOAD MORE' : 'THE END' }
         </button>
       </article>
