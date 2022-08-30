@@ -2,10 +2,12 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import useEvents from '../lib/useEvents'
 import { useState } from 'react'
+import FilterButton from '../components/FilterButton'
 
 const Home: NextPage = () => {
   const [ q, setQ ] = useState('')
-  const { pages, loading, error, hasMore, loadMore } = useEvents({ q })
+  const [ filter, setFilter ] = useState('')
+  const { pages, loading, error, hasMore, loadMore } = useEvents({ q, filter })
 
   return (
     <main>
@@ -18,6 +20,7 @@ const Home: NextPage = () => {
         <header className='h-[108px] bg-[#F5F5F5] rounded-t-[15px] mx-[18px] py-[18px] px-[23px] z-10'>
           <div className='flex h-[45px] border border-[#E0E0DF] rounded-[8px]'>
             <input className="flex-1 bg-transparent border-0 outline-0 m-[13px] font-['Inter'] text-[#959595]" onChange={e => setQ(e.target.value)} placeholder="Search name, email or action..." />
+            <FilterButton onFilter={setFilter}/>
           </div>
           <div className='flex'>
             <div className='flex-1 font-semibold py-[14px] uppercase text-[#616161]'>ACTOR</div>

@@ -5,6 +5,7 @@ import Event from '../types/Event'
 
 type Options = {
     q: string
+    filter: string
 }
 
 type PageProps = {
@@ -43,7 +44,7 @@ export default function useEvents(options: Options) {
 
 function Page ({ index, options, expanded, setExpanded, onLoading, onError, onHasMore } : PageProps ) {
     const fetcher = (input: RequestInfo | URL, init?: RequestInit | undefined) => fetch(input, init).then(res => res.json())
-    let url = `/api/events?page=${index}`
+    let url = `/api/events?page=${index}` + options.filter
     if (options.q) url += `&q=${options.q}`
     const { data, error } = useSWR<EventResponse>(url, fetcher);
   
