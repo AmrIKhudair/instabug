@@ -1,5 +1,5 @@
+import Image from "next/image"
 import { useState } from "react"
-import FilterListIcon from '@mui/icons-material/FilterList';
 
 export default function FilterButton({ onFilter } : { onFilter: (filter: string) => void }) {
     const [toggle, setToggle] = useState(false)
@@ -18,7 +18,7 @@ export default function FilterButton({ onFilter } : { onFilter: (filter: string)
     return (
         <div className="relative flex px-[15px] border-l">
             <button className="font-['Inter'] text-[#575757] uppercase flex items-center" onClick={() => setToggle(!toggle)}>
-                <FilterListIcon /> Filter
+                <Image src="/icons/filter.svg" width={15} height={10} alt='' />&nbsp;Filter
             </button>
 
             { toggle && (
