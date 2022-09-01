@@ -1,4 +1,4 @@
-import { createContext, Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import useSWR from "swr";
 import EventRow from '../components/EventRow'
 import Event from '../types/Event'
