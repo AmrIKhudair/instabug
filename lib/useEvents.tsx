@@ -2,15 +2,11 @@ import { Dispatch, SetStateAction, useState } from "react";
 import useSWR from "swr";
 import EventRow from '../components/EventRow'
 import Event from '../types/Event'
-
-type Options = {
-    q: string
-    filter: string
-}
+import EventOptions from "../types/EventOptions";
 
 type PageProps = {
     index: number,
-    options: Options,
+    options: EventOptions,
     expanded: string,
     setExpanded: Dispatch<SetStateAction<string>>,
     onLoading?: (loading: boolean) => any,
@@ -23,7 +19,7 @@ type EventResponse = {
     hasMore: boolean
 }
 
-export default function useEvents(options: Options) {
+export default function useEvents(options: EventOptions) {
     const [index, setIndex] = useState(1)
     const pages = []
     const loadMore = () => setIndex(index + 1)
