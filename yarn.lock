@@ -1942,6 +1942,11 @@ source-map-js@^1.0.2:
   resolved "https://registry.yarnpkg.com/source-map-js/-/source-map-js-1.0.2.tgz#adbc361d9c62df380125e7f161f71c826f1e490c"
   integrity sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==
 
+sse.js@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/sse.js/-/sse.js-0.6.0.tgz#2b8fc2492d6a53788a980b1f8d361dfa761714a5"
+  integrity sha512-D8ti429DeGwzHGpEPX4Uf0aIrmMhUFLQLhnJB+9GHKJcOpNfWtFN5XSFPntESq8Duvj9RYWjuu1SxkUiT9TpTA==
+
 string.prototype.matchall@^4.0.7:
   version "4.0.7"
   resolved "https://registry.yarnpkg.com/string.prototype.matchall/-/string.prototype.matchall-4.0.7.tgz#8e6ecb0d8a1fb1fda470d81acecb2dba057a481d"
