@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client";
+import { Prisma, Event, EventAction } from "@prisma/client";
 import { NextApiRequest } from "next";
 
 export function generateId(prefix: string, length = 12) {
@@ -52,4 +52,24 @@ export function getEventQuery(query: NextApiRequest['query']) {
     if (action_name) AND.push({ action: { name: { equals: action_name } } })
 
     return eventQuery;
+}
+
+export function eventToJson(event: Event & {action: EventAction}) {
+    return {
+        id: event.id,
+        object: 'event',
+        actor_id: event.actor_id,
+        actor_name: event.actor_name,
+        group: event.group,
+        action: {
+            id: event.action.id,
+            object: 'event_action',
+            name: event.action.name
+        },
+        target_id: event.target_id,
+        target_name: event.target_name,
+        location: event.location,
+        occured_at: event.occured_at,
+        metadata: event.metadata
+    }
 }

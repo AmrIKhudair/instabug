@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { PrismaClient, Event, EventAction } from '@prisma/client'
-import { generateId, getEventQuery } from '../../lib/database'
+import { eventToJson, generateId, getEventQuery } from '../../lib/database'
+import channel from '../../services/sse'
 
 interface EventCreateRequest {
     actor_id: string,
@@ -36,23 +37,7 @@ export default async function handler (req: NextApiRequest, res: NextApiResponse
             hasMore = events.length === ITEMS_PER_PAGE && await prisma.event.count({ orderBy: query.orderBy, where: query.where }) > page * ITEMS_PER_PAGE
         }
 
-        const eventsJson = events.map(event => ({
-            id: event.id,
-            object: 'event',
-            actor_id: event.actor_id,
-            actor_name: event.actor_name,
-            group: event.group,
-            action: {
-                id: event.action.id,
-                object: 'event_action',
-                name: event.action.name
-            },
-            target_id: event.target_id,
-            target_name: event.target_name,
-            location: event.location,
-            occured_at: event.occured_at,
-            metadata: event.metadata
-        }))
+        const eventsJson = events.map(eventToJson)
 
         res.json({
             events: eventsJson,
@@ -64,7 +49,7 @@ export default async function handler (req: NextApiRequest, res: NextApiResponse
     case 'POST':
         const data = req.body as EventCreateRequest;
 
-        const event = prisma.event.create({
+        const event = await prisma.event.create({
             data: {
                 id: generateId('evt'),
                 actor_id: data.actor_id,
@@ -87,10 +72,14 @@ export default async function handler (req: NextApiRequest, res: NextApiResponse
                 occured_at: data.occured_at,
                 metadata: data.metadata
             }
-        })
+        }) as Event & { action: EventAction }
+
+        const eventJson = eventToJson(event)
 
         res.statusCode = 201
-        res.json(event)
+        res.json(eventJson)
+
+        channel.broadcast(eventJson, 'created')
         break;
 
     default:
