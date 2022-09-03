@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { Prisma, PrismaClient, Event, EventAction } from '@prisma/client'
-import { generateId } from '../../lib/database';
+import { PrismaClient, Event, EventAction } from '@prisma/client'
+import { generateId, getEventQuery } from '../../lib/database'
 
 interface EventCreateRequest {
     actor_id: string,
@@ -22,75 +22,11 @@ const ITEMS_PER_PAGE = 10
 export default async function handler (req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
     case 'GET':
-        const query: Prisma.EventFindManyArgs = { take: ITEMS_PER_PAGE, include: { action: true }, orderBy: { occured_at: 'desc' } }
+        const query = getEventQuery(req.query)
         const page = +(req.query.page as string) || 1
-        const q = req.query.q as string
-        const actor_id = req.query.actor_id as string
-        const target_id = req.query.target_id as string
-        const action_id = req.query.action_id as string
-        const action_name = req.query.action_name as string
 
-        if (page) {
-            query.skip = (page - 1) * ITEMS_PER_PAGE 
-            query.take = ITEMS_PER_PAGE
-        }
-
-        if (q) {
-            if (!query.where) query.where = {}
-            if (!query.where.AND) query.where.AND = []
-            const AND = query.where.AND as Prisma.EventWhereInput[]
-
-            AND.push({
-                OR: [
-                    { id: { equals: q }},
-                    { actor_id: { equals: q } },
-                    { actor_name: { contains: q, } },
-                    { group: { equals: q } },
-                    {
-                        action: {
-                            OR: [
-                                { id: { equals: q } },
-                                { name: { contains: q } }
-                            ]
-                        }
-                    },
-                    { target_id: { equals: q } },
-                    { target_name: { contains: q } },
-                ]  
-            })
-        }
-
-        if (actor_id) {
-            if (!query.where) query.where = {}
-            if (!query.where.AND) query.where.AND = []
-            const AND = query.where.AND as Prisma.EventWhereInput[]
-
-            AND.push({ actor_id: { equals: actor_id } })
-        }
-
-        if (target_id) {
-            if (!query.where) query.where = {}
-            if (!query.where.AND) query.where.AND = []
-            const AND = query.where.AND as Prisma.EventWhereInput[]
-
-            AND.push({ target_id: { equals: target_id } })
-        }
-
-        if (action_id) {
-            if (!query.where) query.where = {}
-            if (!query.where.AND) query.where.AND = []
-            const AND = query.where.AND as Prisma.EventWhereInput[]
-
-            AND.push({ action: { id: { equals: action_id } } })
-        }
-
-        if (action_name) {
-            if (!query.where) query.where = {}
-            if (!query.where.AND) query.where.AND = []
-            const AND = query.where.AND as Prisma.EventWhereInput[]
-
-            AND.push({ action: { name: { equals: action_name } } })
-        }
+        query.take = ITEMS_PER_PAGE;
+        query.skip = (page - 1) * ITEMS_PER_PAGE
 
         const events = await prisma.event.findMany(query) as Array<Event & {action: EventAction}>
         let hasMore = false
