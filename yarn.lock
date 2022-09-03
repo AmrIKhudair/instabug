@@ -475,6 +475,11 @@ balanced-match@^1.0.0:
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.2.tgz#e83e3a7e3f300b34cb9d87f615fa0cbf357690ee"
   integrity sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
 
+better-sse@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/better-sse/-/better-sse-0.8.0.tgz#2939fae49209f3e00d16da3edfe039a09a941177"
+  integrity sha512-ymOse8R0L+R2S1W85yOGkkc+yTzAmo52S4erjxPyBVwpqjpS+X228BG7hDwgKsGV/D51YhCYd+eaDwJ+sL5JhA==
+
 binary-extensions@^2.0.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/binary-extensions/-/binary-extensions-2.2.0.tgz#75f502eeaf9ffde42fc98829645be4ea76bd9e2d"
