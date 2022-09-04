@@ -11,7 +11,7 @@ export default function FilterButton({ onFilter } : { onFilter: (filter: string)
     function handleFilter() {
         let filter = ''
         if (actorId) filter += `&actor_id=${actorId}`
-        if (targetId) filter += `&target_id=${actionId}`
+        if (targetId) filter += `&target_id=${targetId}`
         if (actionId) filter += `&action_id=${actionId}`
         if (actionName) filter += `&action_name=${actionName}`
         onFilter(filter)
