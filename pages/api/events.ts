@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { PrismaClient, Event, EventAction } from '@prisma/client'
-import { eventToJson, generateId, getEventQuery } from '../../lib/database'
-import channel from '../../services/sse'
+import { eventToJson, generateId, getAnd, getEventQuery } from '../../lib/database'
+import { broadcast } from '../../services/sse'
 
 interface EventCreateRequest {
     actor_id: string,
@@ -71,6 +71,10 @@ export default async function handler (req: NextApiRequest, res: NextApiResponse
                 location: data.location,
                 occured_at: data.occured_at,
                 metadata: data.metadata
+            },
+
+            include: {
+                action: true
             }
         }) as Event & { action: EventAction }
 
@@ -79,7 +83,15 @@ export default async function handler (req: NextApiRequest, res: NextApiResponse
         res.statusCode = 201
         res.json(eventJson)
 
-        channel.broadcast(eventJson, 'created')
+        broadcast(async (req) => {
+            const query = getEventQuery(req.query)
+            const AND = getAnd(query)
+
+            AND.push({ id: { equals: event.id }})
+
+            const count = await prisma.event.count({ where: query.where })
+            if (count) return eventJson
+        }, 'created')
         break;
 
     default:

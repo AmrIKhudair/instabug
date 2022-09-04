@@ -10,7 +10,7 @@ const Home: NextPage = () => {
   const [ q, setQ ] = useState('')
   const [ filter, setFilter ] = useState('')
   const [ live, setLive ] = useState(false)
-  const { pages, loading, error, hasMore, loadMore } = useEvents({ q, filter })
+  const { liveEvents, pages, loading, error, hasMore, loadMore } = useEvents({ q, filter }, live)
 
   return (
     <main>
@@ -36,6 +36,7 @@ const Home: NextPage = () => {
 
         <main className='relative px-[23px] overflow-x-hidden overflow-y-auto no-scrollbar flex-1'>
           <div className='mx-[18px]'>
+            { liveEvents }
             { pages }
           </div>
         </main>

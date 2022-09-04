@@ -13,6 +13,12 @@ export function generateId(prefix: string, length = 12) {
     return prefix + '_' + id.join('')
 }
 
+export function getAnd(query: Prisma.EventFindManyArgs) {
+    if (!query.where) query.where = {}
+    if (!query.where.AND) query.where.AND = []
+    return query.where.AND as Prisma.EventWhereInput[]
+}
+
 export function getEventQuery(query: NextApiRequest['query']) {
     const eventQuery: Prisma.EventFindManyArgs = { include: { action: true }, orderBy: { occured_at: 'desc' } }
     const q = query.q as string
@@ -21,9 +27,7 @@ export function getEventQuery(query: NextApiRequest['query']) {
     const action_id = query.action_id as string
     const action_name = query.action_name as string
 
-    if (!eventQuery.where) eventQuery.where = {}
-    if (!eventQuery.where.AND) eventQuery.where.AND = []
-    const AND = eventQuery.where.AND as Prisma.EventWhereInput[]
+    const AND = getAnd(eventQuery)
 
     if (q) {
         AND.push({
