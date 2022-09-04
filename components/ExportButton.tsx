@@ -14,7 +14,7 @@ function exportEvents(options: EventOptions) {
 export default function ExportButton({ options }: { options: EventOptions }) {
     return (
         <button className="font-['Inter'] text-[#575757] uppercase flex items-center px-[15px] border-l" onClick={() => exportEvents(options)}>
-            <Image src="/icons/export.svg" width={15} height={11} alt='' />&nbsp;Export
+            <Image src="/icons/export.svg" width={11} height={15} alt='' />&nbsp;Export
         </button>
     )
 }
