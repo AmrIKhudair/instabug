@@ -34,8 +34,7 @@ export default function useEvents(options: EventOptions, live = false) {
     const [hasMore, setHasMore] = useState(false)
     const [expanded, setExpanded] = useState('')
 
-    const liveEventsInit = <LiveEvents toggle={live} options={options} expanded={expanded} setExpanded={setExpanded} />
-    const [liveEvents, setLiveEvents] = useState(liveEventsInit)
+    const [liveEvents, setLiveEvents] = useState(<></>)
     const [pages, setPages] = useState<JSX.Element[]>([])
 
     useEffect(() => {
