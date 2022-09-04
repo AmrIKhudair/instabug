@@ -4,10 +4,12 @@ import useEvents from '../lib/useEvents'
 import { useState } from 'react'
 import FilterButton from '../components/FilterButton'
 import ExportButton from '../components/ExportButton'
+import LiveButton from '../components/LiveButton'
 
 const Home: NextPage = () => {
   const [ q, setQ ] = useState('')
   const [ filter, setFilter ] = useState('')
+  const [ live, setLive ] = useState(false)
   const { pages, loading, error, hasMore, loadMore } = useEvents({ q, filter })
 
   return (
@@ -23,6 +25,7 @@ const Home: NextPage = () => {
             <input className="flex-1 bg-transparent border-0 outline-0 m-[13px] font-['Inter'] text-[#959595]" onChange={e => setQ(e.target.value)} placeholder="Search name, email or action..." />
             <FilterButton onFilter={setFilter} />
             <ExportButton options={{ q, filter }} />
+            <LiveButton toggle={live} setToggle={setLive} />
           </div>
           <div className='flex'>
             <div className='flex-1 font-semibold py-[14px] uppercase text-[#616161]'>ACTOR</div>
