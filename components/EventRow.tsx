@@ -75,7 +75,7 @@ export default function EventRow ({ event, expanded = false, onClick }: Props) {
                                 {Object.entries(event.metadata).map(([key, value]) => (
                                     <div className='table-row' key={key}>
                                         <div className='table-cell w-[90px] text-[#929292] pb-[12px]'>{key}</div>
-                                        <div className='table-cell pb-[12px]'>{value}</div>
+                                        <div className='table-cell pb-[12px]'>{typeof value === 'object' ? JSON.stringify(value) : value}</div>
                                     </div>
                                 ))}
                             </div>

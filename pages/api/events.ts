@@ -67,7 +67,7 @@ export default async function handler (req: NextApiRequest, res: NextApiResponse
                     }
                 },
                 target_id: data.target_id,
-                target_name: data.target_name,
+                target_name: data.target_name,  
                 location: data.location,
                 occured_at: data.occured_at,
                 metadata: data.metadata
