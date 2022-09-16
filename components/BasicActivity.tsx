@@ -1,4 +1,3 @@
-import Image from "next/image";
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
