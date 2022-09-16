@@ -19,7 +19,7 @@ export default function BasicActivity ({ icon, actor_name, text, time }: Props) 
                 className='inline-block object-scale-down' />
             <strong className="ml-[11px]">{actor_name}&nbsp;</strong>
             <span className="mr-[8px]">{text}</span>
-            <time>{dayjs(time).fromNow()}.</time>
+            <time dateTime={time}>{dayjs(time).fromNow()}.</time>
         </div>
     )
 }
