@@ -22,7 +22,7 @@ export default function Activities () {
                 </h1>
 
                 <ul className="list-none">
-                    {data.map(item => <Activity value={item} key={item.id} />)}
+                    {data.map(item => <li key={item.id}><Activity value={item} /></li>)}
                 </ul>
             </main>
         </div>

@@ -12,7 +12,7 @@ dayjs.extend(relativeTime)
 
 export default function BasicActivity ({ icon, actor_name, text, time }: Props) {
     return (
-        <div className="flex items-center m-1 font-['Inter'] text-[12px] leading-[15px]">
+        <div className="flex items-center font-['Inter'] text-[12px] leading-[15px] mb-[21px]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={icon} alt='' width={22} height={22}
                 className='inline-block object-scale-down' />
